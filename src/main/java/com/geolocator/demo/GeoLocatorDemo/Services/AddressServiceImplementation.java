@@ -30,17 +30,24 @@ public class AddressServiceImplementation implements AddressService {
     @Override
     public GeoLocResponse getAddressGeoLocation(GeoLocRequest request) {
 
-        try {
-            //If the address is present in the database, the response is sent to the client directly
-            Optional<GeoLocResponse> response = addressRepository.getAddress(
-                    request.getCountry(),
-                    request.getCity(),
-                    request.getStreet(),
-                    request.getPostalCode());
+        Optional<GeoLocResponse> response = null;
 
-            //fetch the geolocation from the third party API and store it in the database, and then return the response to the client
-            if(response.isEmpty()){
-                //fetch the address from the external API
+        Boolean responseExistsInLocalDB = addressRepository.existsByCountryAndCityAndStreetAndPostalCode(
+                request.getCountry(),
+                request.getCity(),
+                request.getStreet(),
+                request.getPostalCode());
+
+        try {
+            //If the address is present in the database, the response is sent to the client directly. No need for external API
+            if(responseExistsInLocalDB){
+                 response = addressRepository.getAddress(
+                        request.getCountry(),
+                        request.getCity(),
+                        request.getStreet(),
+                        request.getPostalCode());
+            }else{
+                //fetch the address from the external API with validation.
                 response = Optional.ofNullable(addressValidationService.validateAddress(request))
                         .orElseThrow(() -> new ResourceNotFoundException("Address doesn't exist."));
 
@@ -56,10 +63,12 @@ public class AddressServiceImplementation implements AddressService {
                         response.get().getCountry(),
                         response.get().getCity(),
                         response.get().getStreet(),
-                        response.get().getPostalCode());
+                        response.get().getPostalCode(),
+                        geolocation);
 
                 addressRepository.save(addressToInsert);
             }
+
             return response.get();
 
         } catch (Exception e) {

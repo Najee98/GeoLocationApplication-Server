@@ -30,4 +30,6 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
                                         @Param("city") String city,
                                         @Param("street") String street,
                                         @Param("postalCode") String postalCode);
+
+    Boolean existsByCountryAndCityAndStreetAndPostalCode(String country, String city, String street, String postalCode);
 }

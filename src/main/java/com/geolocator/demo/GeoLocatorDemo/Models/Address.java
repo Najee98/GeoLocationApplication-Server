@@ -34,10 +34,11 @@ public class Address {
     @JoinColumn(name = "geolocationId", referencedColumnName = "geolocation_id", nullable = true)
     Geolocation geolocation;
 
-    public Address(String country, String city, String street, String postalCode) {
+    public Address(String country, String city, String street, String postalCode, Geolocation geolocation) {
         this.country = country;
         this.city = city;
         this.street = street;
         this.postalCode = postalCode;
+        this.geolocation = geolocation;
     }
 }

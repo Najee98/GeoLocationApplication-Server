@@ -2,7 +2,7 @@ package com.geolocator.demo.GeoLocatorDemo.Controllers;
 
 import com.geolocator.demo.GeoLocatorDemo.Dto.GeoLocRequest;
 import com.geolocator.demo.GeoLocatorDemo.Email.EmailService;
-import com.geolocator.demo.GeoLocatorDemo.Exceptions.ResourceNotFoundException;
+import com.geolocator.demo.GeoLocatorDemo.Exceptions.CustomExceptions.ResourceNotFoundException;
 import com.geolocator.demo.GeoLocatorDemo.Services.AddressService;
 import com.geolocator.demo.GeoLocatorDemo.Services.GeolocationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,23 +28,12 @@ public class GeolocationController {
 
     @PostMapping("/get")
     public ResponseEntity<Object> getGeolocation(@RequestBody GeoLocRequest request){
-        try{
-            return new ResponseEntity<>(addressService.getAddressGeoLocation(request), HttpStatus.OK);
-        }catch(ResourceNotFoundException e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }catch(Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
-        }
+        return new ResponseEntity<>(addressService.getAddressGeoLocation(request), HttpStatus.OK);
     }
 
     @GetMapping("/send-mail")
     public ResponseEntity<Object> sendEmail(@RequestParam String mailReceiver){
-        try{
-            emailService.sendMessage(mailReceiver);
-            return new ResponseEntity<>("{ \"message\": \"email send successfully.\" }", HttpStatus.OK);
-        }catch (MailSendException e){
-            //returning a 501 error to demonstrate request fail
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_IMPLEMENTED);
-        }
+        emailService.sendMessage(mailReceiver);
+        return new ResponseEntity<>("{ \"message\": \"email send successfully.\" }", HttpStatus.OK);
     }
 }

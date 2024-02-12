@@ -1,4 +1,4 @@
-package com.geolocator.demo.GeoLocatorDemo.Exceptions;
+package com.geolocator.demo.GeoLocatorDemo.Exceptions.CustomExceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
 

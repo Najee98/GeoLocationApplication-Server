@@ -11,11 +11,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class GeoLocRequest implements Serializable {
 
-    String country; // This should be the country code
+    String country;
 
-    String city; // This should be the city
+    String city;
 
-    String street; // This should be the street address
+    String street;
 
     String postalCode;
 

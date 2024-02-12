@@ -20,8 +20,7 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
             "gl.longitude," +
             "gl.latitude) " +
             "from " +
-            "Address addr join Geolocation gl " +
-            "on addr.geolocation.geolocationId = gl.geolocationId " +
+            "Address as addr join addr.geolocation as gl " +
             "where " +
             "(addr.country is null or addr.country = :country) and " +
             "(addr.city is null or addr.city = :city) and " +

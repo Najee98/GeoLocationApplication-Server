@@ -2,7 +2,7 @@ package com.geolocator.demo.GeoLocatorDemo.Services;
 
 import com.geolocator.demo.GeoLocatorDemo.Dto.GeoLocRequest;
 import com.geolocator.demo.GeoLocatorDemo.Dto.GeoLocResponse;
-import com.geolocator.demo.GeoLocatorDemo.Exceptions.ResourceNotFoundException;
+import com.geolocator.demo.GeoLocatorDemo.Exceptions.CustomExceptions.ResourceNotFoundException;
 import com.geolocator.demo.GeoLocatorDemo.Integration.AddressValidationService;
 import com.geolocator.demo.GeoLocatorDemo.Models.Address;
 import com.geolocator.demo.GeoLocatorDemo.Models.Geolocation;
@@ -35,7 +35,7 @@ public class AddressServiceImplementation implements AddressService {
             Optional<GeoLocResponse> response = addressRepository.getAddress(
                     request.getCountry(),
                     request.getCity(),
-                    request.getCity(),
+                    request.getStreet(),
                     request.getPostalCode());
 
             //fetch the geolocation from the third party API and store it in the database, and then return the response to the client

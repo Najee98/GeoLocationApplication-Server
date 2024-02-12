@@ -1,6 +1,7 @@
 package com.geolocator.demo.GeoLocatorDemo.Controllers;
 
 import com.geolocator.demo.GeoLocatorDemo.Dto.GeoLocRequest;
+import com.geolocator.demo.GeoLocatorDemo.Dto.GeoLocResponse;
 import com.geolocator.demo.GeoLocatorDemo.Email.EmailService;
 import com.geolocator.demo.GeoLocatorDemo.Exceptions.CustomExceptions.ResourceNotFoundException;
 import com.geolocator.demo.GeoLocatorDemo.Services.AddressService;
@@ -33,7 +34,8 @@ public class GeolocationController {
 
     @GetMapping("/send-mail")
     public ResponseEntity<Object> sendEmail(@RequestParam String mailReceiver){
-        emailService.sendMessage(mailReceiver);
+        GeoLocResponse geolocation = addressService.getGeolocationResult();
+        emailService.sendMessage(mailReceiver, geolocation);
         return new ResponseEntity<>("{ \"message\": \"email send successfully.\" }", HttpStatus.OK);
     }
 }

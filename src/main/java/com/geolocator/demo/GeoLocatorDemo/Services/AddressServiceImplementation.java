@@ -16,6 +16,8 @@ import java.util.Optional;
 @Service
 public class AddressServiceImplementation implements AddressService {
 
+    Optional<GeoLocResponse> response;
+
     private final AddressRepository addressRepository;
     private final AddressValidationService addressValidationService;
     private final GeolocationRepository geolocationRepository;
@@ -29,8 +31,6 @@ public class AddressServiceImplementation implements AddressService {
 
     @Override
     public GeoLocResponse getAddressGeoLocation(GeoLocRequest request) {
-
-        Optional<GeoLocResponse> response = null;
 
         Boolean responseExistsInLocalDB = addressRepository.existsByCountryAndCityAndStreetAndPostalCode(
                 request.getCountry(),
@@ -74,5 +74,10 @@ public class AddressServiceImplementation implements AddressService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @Override
+    public GeoLocResponse getGeolocationResult() {
+        return response.get();
     }
 }

@@ -22,10 +22,10 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
             "from " +
             "Address as addr join addr.geolocation as gl " +
             "where " +
-            "(addr.country is null or addr.country = :country) and " +
-            "(addr.city is null or addr.city = :city) and " +
-            "(addr.street is null or addr.street = :street) and " +
-            "(addr.postalCode is null or addr.postalCode = :postalCode)")
+            "(:country is null or addr.country = :country) and " +
+            "(:city is null or addr.city = :city) and " +
+            "(:street is null or addr.street = :street) and " +
+            "(:postalCode is null or addr.postalCode = :postalCode)")
     Optional<GeoLocResponse> getAddress(@Param("country") String country,
                                         @Param("city") String city,
                                         @Param("street") String street,

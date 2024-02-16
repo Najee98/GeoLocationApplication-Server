@@ -36,6 +36,10 @@ public class GeolocationController {
     @GetMapping("/send-mail")
     public ResponseEntity<Object> sendEmail(@RequestBody GeoLocEmailRequest request){
         emailService.sendMessage(request.getMailReceiver(), request.getGeolocationResult());
-        return new ResponseEntity<>("{ \"message\": \"email send successfully.\" }", HttpStatus.OK);
+        String email = String
+                .format("{ \"message\": \"email sent successfully with geolocation (%f, %f).\" }",
+                        request.getGeolocationResult().getLongitude(),
+                        request.getGeolocationResult().getLatitude());
+        return new ResponseEntity<>(email, HttpStatus.OK);
     }
 }

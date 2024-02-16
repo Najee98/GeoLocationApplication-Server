@@ -13,10 +13,6 @@ import java.util.Optional;
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
     @Query("select new com.geolocator.demo.GeoLocatorDemo.Dto.GeoLocResponse(" +
-            "addr.country," +
-            "addr.city," +
-            "addr.street," +
-            "addr.postalCode," +
             "gl.longitude," +
             "gl.latitude) " +
             "from " +

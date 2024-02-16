@@ -1,32 +1,17 @@
 package com.geolocator.demo.GeoLocatorDemo.Integration;
 
+import com.geolocator.demo.GeoLocatorDemo.Integration.Utilities.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddressValidationResponse {
-    private String country;
-    private String city;
-    private String street;
-    private String postalCode;
-    private Double lon;
-    private Double lat;
-//    private Geometry geometry;
-//
-//    @Data
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    public static class Geometry {
-//        private Location location;
-//
-//        @Data
-//        @AllArgsConstructor
-//        @NoArgsConstructor
-//        public static class Location {
-//
-//        }
-//    }
+    String type;
+    List<Feature> features;
+    Query query;
 }

@@ -2,6 +2,7 @@ package com.geolocator.demo.GeoLocatorDemo.Integration;
 
 import com.geolocator.demo.GeoLocatorDemo.Dto.GeoLocRequest;
 import com.geolocator.demo.GeoLocatorDemo.Dto.GeoLocResponse;
+import com.geolocator.demo.GeoLocatorDemo.Integration.Utilities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
@@ -26,11 +27,17 @@ public class AddressValidationService {
                 geoapifyApiUrl, apiKey, address.getCountry(), address.getCity(), address.getStreet(), address.getPostCode());
         AddressValidationResponse apiResponse = this.restTemplate.getForObject(url, AddressValidationResponse.class);
 
-        // Map the fields from the API response to the GeoLocResponse object
+        if (apiResponse.getFeatures().isEmpty()) {
+            return Optional.empty();
+        }
+
+        Feature feature = apiResponse.getFeatures().get(0);
+
         GeoLocResponse response = new GeoLocResponse();
-        response.setLongitude(apiResponse.getLon());
-        response.setLatitude(apiResponse.getLat());
+        response.setLongitude(feature.getProperties().getLon());
+        response.setLatitude(feature.getProperties().getLat());
 
         return Optional.of(response);
     }
+
 }

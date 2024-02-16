@@ -7,5 +7,4 @@ public interface AddressService {
 
     GeoLocResponse getAddressGeoLocation(GeoLocRequest request);
 
-    GeoLocResponse getGeolocationResult();
 }

@@ -23,15 +23,11 @@ public class AddressValidationService {
 
     public Optional<GeoLocResponse> validateAddress(GeoLocRequest address) {
         String url = String.format("%s?apiKey=%s&country=%s&city=%s&street=%s&postalCode=%s",
-                geoapifyApiUrl, apiKey, address.getCountry(), address.getCity(), address.getStreet(), address.getPostalCode());
+                geoapifyApiUrl, apiKey, address.getCountry(), address.getCity(), address.getStreet(), address.getPostCode());
         AddressValidationResponse apiResponse = this.restTemplate.getForObject(url, AddressValidationResponse.class);
 
         // Map the fields from the API response to the GeoLocResponse object
         GeoLocResponse response = new GeoLocResponse();
-        response.setCountry(apiResponse.getCountry());
-        response.setCity(apiResponse.getCity());
-        response.setStreet(apiResponse.getStreet());
-        response.setPostalCode(apiResponse.getPostalCode());
         response.setLongitude(apiResponse.getLon());
         response.setLatitude(apiResponse.getLat());
 

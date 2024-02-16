@@ -7,14 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class GeoLocResponse {
 
-    String country;
-
-    String city;
-
-    String street;
-
-    String postalCode;
-
     Double longitude;
 
     Double latitude;
@@ -22,11 +14,7 @@ public class GeoLocResponse {
     public GeoLocResponse() {
     }
 
-    public GeoLocResponse(String country, String city, String street, String postalCode, Double longitude, Double latitude) {
-        this.country = country;
-        this.city = city;
-        this.street = street;
-        this.postalCode = postalCode;
+    public GeoLocResponse(Double longitude, Double latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
     }

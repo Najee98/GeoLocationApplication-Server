@@ -17,9 +17,9 @@ public class GeoLocRequest implements Serializable {
 
     String street;
 
-    String postalCode;
+    String postCode;
 
     public String getFormattedAddress() {
-        return String.format("%s, %s, %s, %s", street, city, postalCode, country);
+        return String.format("%s, %s, %s, %s", street, city, postCode, country);
     }
 }

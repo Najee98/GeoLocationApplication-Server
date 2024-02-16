@@ -11,6 +11,7 @@ import com.geolocator.demo.GeoLocatorDemo.Repositories.GeolocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -36,7 +37,7 @@ public class AddressServiceImplementation implements AddressService {
                 request.getCountry(),
                 request.getCity(),
                 request.getStreet(),
-                request.getPostalCode());
+                request.getPostCode());
 
         try {
             //If the address is present in the database, the response is sent to the client directly. No need for external API
@@ -45,7 +46,7 @@ public class AddressServiceImplementation implements AddressService {
                         request.getCountry(),
                         request.getCity(),
                         request.getStreet(),
-                        request.getPostalCode());
+                        request.getPostCode());
             }else{
                 //fetch the address from the external API with validation.
                 response = Optional.ofNullable(addressValidationService.validateAddress(request))
@@ -60,10 +61,10 @@ public class AddressServiceImplementation implements AddressService {
                 geolocationRepository.save(geolocation);
 
                 Address addressToInsert = new Address(
-                        response.get().getCountry(),
-                        response.get().getCity(),
-                        response.get().getStreet(),
-                        response.get().getPostalCode(),
+                        request.getCountry(),
+                        request.getCity(),
+                        request.getStreet(),
+                        request.getPostCode(),
                         geolocation);
 
                 addressRepository.save(addressToInsert);
@@ -78,6 +79,6 @@ public class AddressServiceImplementation implements AddressService {
 
     @Override
     public GeoLocResponse getGeolocationResult() {
-        return response.get();
+        return Optional.of(response).orElseThrow(() -> new NoSuchElementException()).get();
     }
 }
